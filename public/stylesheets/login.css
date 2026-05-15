@@ -1,0 +1,65 @@
+
+.loginBox {
+  width: 620px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+
+
+
+form label {
+  display: block;
+  text-align: left;
+  margin: 0.75rem;
+  font-weight: 600;
+  color: #336;
+}
+
+
+form input {
+  width: 90%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+form input:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+
+.error {
+  background: #ffe0e0;
+  color: #a33;
+  padding: 0.6rem;
+  margin: 0.75rem 0;
+  border: 1px solid #d88;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+
+form button {
+  width: 70%;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding: 0.9rem;
+  background: #4a90e2;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #357ab8;
+}

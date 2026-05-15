@@ -1,0 +1,133 @@
+:root {
+    --bg: #f7f8fb;
+    --card: #fff;
+    --ink: #1f2430;
+    --muted: #667085;
+    --line: #e3e7ee;
+    --brand: #0d47a1;
+    --brand2: #1565c0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.45;
+}
+
+
+.auth-wrap {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.auth-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 560px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
+}
+
+.auth-card h1 {
+    margin: 0 0 6px;
+    font-size: 26px;
+}
+
+.auth-card .sub {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.error {
+    margin: 12px 0 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #ffecec;
+    border: 1px solid #ffbdbd;
+    color: #7a1a1a;
+    font-weight: 600;
+}
+
+.form {
+    display: grid;
+    gap: 12px;
+}
+
+label {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cfd4dc;
+    border-radius: 8px;
+    font: inherit;
+    background: #fff;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--brand2);
+    box-shadow: 0 0 0 3px rgba(21, 101, 192, .18);
+}
+
+.actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--brand), var(--brand2));
+}
+
+.btn:hover {
+    filter: brightness(1.04);
+}
+
+.btn.ghost {
+    background: #fff;
+    color: #1f2430;
+    border: 1px solid var(--line);
+}
+
+.small {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+@media (max-width:900px) {
+    .auth-wrap {
+        margin-left: 0;
+    }
+}

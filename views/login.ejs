@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<meta name="page-id" content="login">
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/login.css' />
+</head>
+
+<body>
+  <%- include('navbar') %>
+
+    <h1>Welcome to CampusWell </h1>
+    <h3>Login</h3>
+    <div class="loginBox">
+
+      <% if (typeof error !=='undefined' && error) { %>
+        <p class="error">
+          <%= error %>
+        </p>
+        <% } %>
+
+
+          <form method="post" action="/login">
+            <label>Email</label>
+            <input name="email" type="email" required />
+            <label>Password</label>
+            <input name="password" type="password" required />
+            <p class="small">
+              New here? <a href="/register">Create an account</a>
+            </p>
+            <button type="submit">Log in</button>
+          </form>
+    </div>
+</body>
+
+</html>
