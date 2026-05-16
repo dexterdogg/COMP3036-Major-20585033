@@ -1,5 +1,4 @@
-volumes:
-  postgres-data:
+version: '3.8'
 
 services:
   app:
@@ -13,13 +12,8 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
-    # Use proper Docker networking instead of network_mode: service:db
-    # to ensure reliable DNS resolution in all environments
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - app-network
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
 
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
@@ -27,16 +21,8 @@ services:
   db:
     image: postgres:latest
     restart: unless-stopped
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
     volumes:
-      - postgres-data:/var/lib/postgresql
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -45,6 +31,5 @@ services:
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-networks:
-  app-network:
-    driver: bridge
+volumes:
+  postgres-data:
