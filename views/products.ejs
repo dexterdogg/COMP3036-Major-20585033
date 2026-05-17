@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <%- include('navbar') %>
+
+  <main class="page">
+    <header class="page-header">
+      <h1>Products</h1>
+      <p>Search the catalogue, filter by category, and add products to your cart.</p>
+    </header>
+
+    <% if (error) { %>
+      <p class="alert"><%= error %></p>
+    <% } %>
+
+    <form class="filters" method="GET" action="/products">
+      <label>
+        Search
+        <input
+          type="search"
+          name="search"
+          value="<%= filters.search %>"
+          placeholder="Search by product name"
+          aria-label="Search by product name"
+        >
+      </label>
+
+      <label>
+        Category
+        <select name="category" aria-label="Filter by category">
+          <option value="">All categories</option>
+          <% categories.forEach((category) => { %>
+            <option
+              value="<%= category.slug %>"
+              <%= filters.category === category.slug ? 'selected' : '' %>
+            >
+              <%= category.name %>
+            </option>
+          <% }) %>
+        </select>
+      </label>
+
+      <button class="button" type="submit">Apply Filters</button>
+    </form>
+
+    <section class="product-grid">
+      <% if (products.length === 0) { %>
+        <p>No products matched your search.</p>
+      <% } %>
+
+      <% products.forEach((product) => { %>
+        <article class="product-card">
+          <img src="<%= product.image_url %>" alt="<%= product.name %>">
+
+          <div class="product-card-body">
+            <p class="eyebrow"><%= product.category_name || 'General' %></p>
+            <h2><a href="/products/<%= product.slug %>"><%= product.name %></a></h2>
+            <p><%= product.description %></p>
+            <p class="price"><%= formatMoney(product.price_cents) %></p>
+            <p class="stock"><%= product.stock_quantity %> in stock</p>
+
+            <% if (isAuthed) { %>
+              <form method="POST" action="/cart/items">
+                <input type="hidden" name="productId" value="<%= product.id %>">
+
+                <label>
+                  Quantity
+                  <input
+                    type="number"
+                    name="quantity"
+                    min="1"
+                    max="<%= product.stock_quantity %>"
+                    value="1"
+                    aria-label="Quantity for <%= product.name %>"
+                  >
+                </label>
+
+                <button class="button" type="submit">Add to Cart</button>
+              </form>
+            <% } else { %>
+              <a class="button secondary" href="/login">Login to Buy</a>
+            <% } %>
+          </div>
+        </article>
+      <% }) %>
+    </section>
+  </main>
+</body>
+</html>
