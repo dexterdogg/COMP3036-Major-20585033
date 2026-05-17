@@ -9,7 +9,11 @@ import { loginRouter } from './routes/login.js';
 import { profileRouter } from './routes/profile.js';
 import { accountRouter } from './routes/account.js';
 import { logoutRouter } from './routes/logout.js';
-
+import { productsRouter } from './routes/products.js';
+import { cartRouter } from './routes/cart.js';
+import { checkoutRouter } from './routes/checkout.js';
+import { adminProductsRouter } from './routes/adminProducts.js';
+import { apiProductsRouter } from './routes/apiProducts.js';
 
 // Setup debug module to spit out all messages
 // Do `npn start` to see the debug messages
@@ -38,6 +42,11 @@ app.use('/login', loginRouter);
 app.use('/profile', profileRouter);
 app.use('/logout', logoutRouter);
 app.use('/register', accountRouter);
+app.use('/products', productsRouter);
+app.use('/cart', cartRouter);
+app.use('/checkout', checkoutRouter);
+app.use('/admin/products', adminProductsRouter);
+app.use('/api/products', apiProductsRouter);
 // Not encouraged, but this is a simple example of how to register a route without a router.
 app.get('/test', (req, res) => {
   res.send('Test');

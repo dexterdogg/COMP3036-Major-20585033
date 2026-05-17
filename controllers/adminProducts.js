@@ -1,0 +1,7 @@
+showCreateForm()
+createProduct()
+showEditForm()
+updateProduct()
+deleteProduct()
+viewPurchases()
+listProducts(req, res, next)
