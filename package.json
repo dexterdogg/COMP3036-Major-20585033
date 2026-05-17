@@ -4,12 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "DEBUG=* node app.js",
-    "dev": "nodemon app.js",
-    "migrate": "node config/migrationRunner.js migrate",
-    "destroy": "node config/migrationRunner.js destroy",
-    "test": "NODE_ENV=test node --test tests/**/*.test.js"
-  },
+  "start": "DEBUG=* node app.js",
+  "dev": "nodemon app.js",
+  "test": "NODE_ENV=test node --test --test-concurrency=1 tests/integration/**/*.test.js",
+  "test:e2e": "NODE_ENV=test playwright test",
+  "test:all": "npm test && npm run test:e2e",
+  "migrate": "node ./scripts/migrate.js",
+  "destroy": "node ./scripts/destroy.js"
+},
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cookie-parser": "~1.4.4",
