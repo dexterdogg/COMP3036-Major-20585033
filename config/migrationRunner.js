@@ -6,11 +6,11 @@ import postgres from 'postgres';
 
 // Database connection configuration
 const sql = postgres({
-  username: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: 'postgres',
-  port: 5432,
+  host: process.env.PGHOST || 'localhost',
+  port: Number(process.env.PGPORT || 5432),
+  database: process.env.PGDATABASE || 'postgres',
+  username: process.env.PGUSER || 'postgres',
+  password: process.env.PGPASSWORD || 'postgres'
 });
 
 // Get the directory name for the migrations folder

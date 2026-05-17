@@ -42,6 +42,7 @@ app.use('/login', loginRouter);
 app.use('/profile', profileRouter);
 app.use('/logout', logoutRouter);
 app.use('/register', accountRouter);
+
 app.use('/products', productsRouter);
 app.use('/cart', cartRouter);
 app.use('/checkout', checkoutRouter);
