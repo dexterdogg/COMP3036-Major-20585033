@@ -8,7 +8,7 @@ export async function showProfile(req, res) {
         if (!req.user?.id) return res.redirect("/login");
 
         const me = await findUserById(Number(req.user.id));
-        //
+        
         if (!me) return res.redirect("/login");
         // Transform to view model
         const viewUser = {

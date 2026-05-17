@@ -22,12 +22,12 @@ server.setup(app)
 
 // Register any middleware here
 import { maybeAuthed, ensureAuthed } from "./middleware/auth.js";
-app.use(maybeAuthed);
 app.use((req, res, next) => {
-  res.locals.isAuthed = false; // default
+  res.locals.isAuthed = false;
   res.locals.me = null;
   next();
 });
+app.use(maybeAuthed);
 
 // Register routers here
 app.use('/', homeRouter);
