@@ -23,5 +23,7 @@
     "postgres": "^3.4.7",
     "supertest": "^7.1.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
 }

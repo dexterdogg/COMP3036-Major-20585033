@@ -60,6 +60,6 @@ export const runningServer =
   process.env.NODE_ENV === 'test'
     ? { close: async () => {} }
     : app.listen(server.port, () => {
-        console.log(`Campus Store running at http://127.0.0.1:${server.port}`);
+        console.log(`University Store running at http://127.0.0.1:${server.port}`);
         codeTrace('server started');
       });
