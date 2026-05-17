@@ -1,3 +1,13 @@
+INSERT INTO users (email, password_hash, role, first_name, last_name)
+VALUES (
+  'admin@example.edu',
+  '$2b$12$W29E4mW45jeXxMacfJ6o.ufu3Aopnw8q9u6fxHAxXqRhbdh05lVEu',
+  'Admin',
+  'Store',
+  'Admin'
+)
+ON CONFLICT (email) DO NOTHING;
+
 CREATE TABLE IF NOT EXISTS product_categories (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) UNIQUE NOT NULL,
