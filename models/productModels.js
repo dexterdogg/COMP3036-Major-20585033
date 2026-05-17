@@ -1,0 +1,6 @@
+getProducts({ search, category })
+getProductById(id)
+getProductBySlug(slug)
+createProduct(data)
+updateProduct(id, data)
+deleteProduct(id)

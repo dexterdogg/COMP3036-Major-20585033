@@ -1,0 +1,7 @@
+getActiveCartByUserId(userId)
+createCart(userId)
+getCartWithItems(userId)
+addCartItem(userId, productId, quantity)
+updateCartItem(userId, productId, quantity)
+removeCartItem(userId, productId)
+clearCart(userId)
