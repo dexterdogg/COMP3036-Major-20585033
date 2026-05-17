@@ -40,3 +40,18 @@ export function maybeAuthed(req, res, next) {
   }
   return next();
 }
+
+export function ensureAdmin(req, res, next) {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+
+  if (req.user.role !== "Admin") {
+    return res.status(403).render("error", {
+      title: "Forbidden",
+      message: "You do not have permission to access this page."
+    });
+  }
+
+  return next();
+}
