@@ -6,7 +6,7 @@ import postgres from 'postgres';
 
 // Database connection configuration
 const sql = postgres({
-  host: process.env.PGHOST || 'localhost',
+  host: process.env.PGHOST || 'db',
   port: Number(process.env.PGPORT || 5432),
   database: process.env.PGDATABASE || 'postgres',
   username: process.env.PGUSER || 'postgres',
