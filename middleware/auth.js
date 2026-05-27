@@ -1,46 +1,82 @@
-
 import jwt from "jsonwebtoken";
 
 const JWT_COOKIE = "auth";
 const { JWT_SECRET = "dev-secret" } = process.env;
 
-// Attach req.user if valid; otherwise redirect to /login
+/**
+ * Strict authentication guard.
+ * Use this only on routes that must require login.
+ */
 export function ensureAuthed(req, res, next) {
-  console.log("Cookie hdr:", req.headers.cookie);
-  console.log("Parsed cookie:", req.cookies);
-
   const token = req.cookies?.[JWT_COOKIE];
+
   if (!token) {
     return res.redirect("/login");
   }
+
   try {
     const payload = jwt.verify(token, JWT_SECRET);
-    req.user = { id: payload.sub, role: payload.role };
-    console.log("AUTH OK:", req.user);
+
+    req.user = {
+      id: payload.sub,
+      role: payload.role,
+    };
+
+    res.locals.isAuthed = true;
+    res.locals.me = req.user;
+
     return next();
-  } catch (e) {
-    console.log("AUTH FAIL:", e.name, e.message); // e.g., JsonWebTokenError: invalid signature
+  } catch (err) {
+    res.clearCookie(JWT_COOKIE, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+    });
+
     return res.redirect("/login");
   }
 }
 
-// If valid JWT, attach req.user; otherwise continue unauthenticated
+
 export function maybeAuthed(req, res, next) {
+  res.locals.isAuthed = false;
+  res.locals.me = null;
+
   const token = req.cookies?.[JWT_COOKIE];
-  if (!token) return next();
-  try {
-    // Verify token
-    const payload = jwt.verify(token, JWT_SECRET);
-    req.user = { id: payload.sub, role: payload.role };
-    // Set locals for views
-    res.locals.isAuthed = true;
-    res.locals.me = req.user; 
-  } catch {
-    return res.redirect("/login");
+
+  if (!token) {
+    return next();
   }
+
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+
+    req.user = {
+      id: payload.sub,
+      role: payload.role,
+    };
+
+    res.locals.isAuthed = true;
+    res.locals.me = req.user;
+  } catch (err) {
+    res.clearCookie(JWT_COOKIE, {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+    });
+
+    req.user = null;
+    res.locals.isAuthed = false;
+    res.locals.me = null;
+  }
+
   return next();
 }
 
+/**
+ * Admin-only guard.
+ * Put ensureAuthed before this on protected admin routes.
+ */
 export function ensureAdmin(req, res, next) {
   if (!req.user) {
     return res.redirect("/login");
@@ -49,7 +85,7 @@ export function ensureAdmin(req, res, next) {
   if (req.user.role !== "Admin") {
     return res.status(403).render("error", {
       title: "Forbidden",
-      message: "You do not have permission to access this page."
+      message: "You do not have permission to access this page.",
     });
   }
 
