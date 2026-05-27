@@ -36,11 +36,14 @@ npm test
 npm run test:e2e
 
 ## Demo Accounts
+
 Student:
-student1@example.edu
+- Email: student1@example.edu
+- Password: Stud123
 
 Admin:
-admin@example.edu
+- Email: admin1@example.edu
+- Password: Admin123
 
 ## API Documentation
 See docs/API.md
