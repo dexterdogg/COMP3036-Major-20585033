@@ -1,135 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="page-id" content="profile" />
-  <title>Student Portal · Profile</title>
-
-  <link rel="stylesheet" href="/stylesheets/profile.css" />
+  <title><%= title || 'My Account' %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
 <body>
   <%- include('navbar') %>
-    <div id="mainContent">
-      <!-- Main container -->
-      <div class="u-container">
-        <!-- Breadcrumbs -->
-        <nav class="u-breadcrumbs" aria-label="Breadcrumb">
-          <ol>
-            <li><a href="/">Home</a></li>
-            <li aria-current="page">My Profile</li>
-          </ol>
-        </nav>
 
-        <!-- Page Title -->
-        <header class="u-pagehead">
-          <h1 class="u-pagehead__title">My Profile</h1>
-          <p class="u-pagehead__sub">Your university identity and student services</p>
-        </header>
+  <main class="page">
+    <header class="page-header">
+      <h1>My Account</h1>
+      <p>Your account details and recent purchase history.</p>
+    </header>
 
-        <!-- Content Grid -->
-        <main class="u-grid" role="main">
-          <!-- Primary card -->
-          <section class="u-card u-card--primary">
-            <div class="u-card__header">
+    <section class="card">
+      <h2><%= (me?.firstName || '') + (me?.lastName ? ' ' + me.lastName : '') || 'User' %></h2>
+      <p>Email: <%= me?.email || '—' %></p>
+      <p>Role: <%= me?.role || '—' %></p>
+    </section>
 
-              <div>
-                <h2 class="u-card__title">
-                  <%= (me?.firstName || "" ) + (me?.lastName ? " " + me.lastName : "" ) || "Student" %>
-                </h2>
-                <p class="u-card__meta">
-                  <%= me?.email || "—" %>
-                </p>
-              </div>
+    <section class="card">
+      <h2>Recent Purchases</h2>
 
-            </div>
-
-            <dl class="u-fields">
-              <div>
-                <dt>Role at University</dt>
-                <dd>
-                  <%= me?.role || "—" %>
-                </dd>
-              </div>
-              <div>
-                <dt>University Email</dt>
-                <dd>
-                  <%= me?.email || "—" %>
-                </dd>
-              </div>
-              <div>
-                <dt>Preferred Name</dt>
-                <dd>
-                  <%= me?.firstName || "—" %>
-                </dd>
-              </div>
-              <div>
-                <dt>Surname</dt>
-                <dd>
-                  <%= me?.lastName || "—" %>
-                </dd>
-              </div>
-            </dl>
-          </section>
-
-          <!-- Secondary column -->
-          <aside class="u-stack">
-            <section class="u-card">
-              <h3 class="u-card__title">Quick Actions</h3>
-              <div class="u-actions">
-                <a class="u-btn" href="/moodTracker">Update wellbeing</a>
-                <a class="u-btn u-btn--alt" href="/search">Find social events</a>
-                <a class="u-btn u-btn--ghost" href="/taskBoard">Open task board</a>
-              </div>
-            </section>
-
-            <section class="u-card">
-              <h3 class="u-card__title">Support Contacts</h3>
-              <ul class="u-list">
-                <li><strong>Wellbeing Services:</strong> wellbeing@university.edu</li>
-                <li><strong>Student Advising:</strong> advising@university.edu</li>
-                <li><strong>IT Helpdesk:</strong> ithelp@university.edu</li>
-              </ul>
-            </section>
-
-            <% if (!me) { %>
-              <section class="u-alert" role="status">
-                We couldn’t load your profile details. Please log in again.
-              </section>
-              <% } %>
-          </aside>
-        </main>
-      </div>
-
-      <section class="u-card u-card--primary">
-        <div class="u-card__header">
-
-          <div>
-            <h2 class="u-card__title">
-              Events Registered
-            </h2>
-            <% if (registeredEvents.length <= 0) { %>
-            <p class="u-card__meta">No registered events, Join one!</p>
-            <% } else { registeredEvents.forEach((ev) => { %>
-                <dl class="u-fields"><dt><%= ev.name %> - <%= ev.location %> - <%=new Date( ev.start_time ).toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: 'short',
-                            year: 'numeric'})%></dt></dl>
-            <% })} %>
-
-          </div>
-        </div>
-      </section>
-
-
-      <!-- Footer -->
-      <footer class="u-footer" role="contentinfo">
-        © <span id="y"></span> Your University — Student Services
-      </footer>
-    </div>
-
+      <% if (!purchases || purchases.length === 0) { %>
+        <p>No purchases yet.</p>
+      <% } else { %>
+        <ul>
+          <% purchases.slice(0, 5).forEach((purchase) => { %>
+            <li>
+              <a href="/orders/<%= purchase.id %>">
+                Order #<%= purchase.id %>
+              </a>
+              — $<%= (Number(purchase.total_cents) / 100).toFixed(2) %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </section>
+  </main>
 </body>
-
 </html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <%- include('navbar') %>
+
+  <main class="page">
+    <header class="page-header">
+      <h1>Checkout</h1>
+      <p>This is a mock payment flow. No real card details are stored.</p>
+    </header>
+
+    <% if (error) { %>
+      <p class="alert"><%= error %></p>
+    <% } %>
+
+    <section class="checkout-layout">
+      <article class="card">
+        <h2>Order Summary</h2>
+
+        <% cart.items.forEach((item) => { %>
+          <p>
+            <strong><%= item.name %></strong>
+            × <%= item.quantity %>
+            — <%= formatMoney(item.line_total_cents) %>
+          </p>
+        <% }) %>
+
+        <hr>
+        <p class="price">Total: <%= formatMoney(cart.totalCents) %></p>
+      </article>
+
+      <article class="card">
+        <h2>Mock Payment</h2>
+
+        <form method="POST" action="/checkout">
+          <label>
+            Cardholder name
+            <input type="text" name="cardholderName" required>
+          </label>
+
+          <label>
+            Mock card number
+            <input type="text" value="4242 4242 4242 4242" disabled>
+          </label>
+
+          <button class="button" type="submit">Pay with Mock Payment</button>
+        </form>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

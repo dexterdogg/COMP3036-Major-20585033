@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <%- include('navbar') %>
+
+  <main class="page">
+    <section class="card success">
+      <h1>Order Confirmed</h1>
+      <p>Your mock payment was accepted.</p>
+      <p>Order number: <strong>#<%= purchase.id %></strong></p>
+      <p>Total paid: <strong><%= formatMoney(purchase.total_cents) %></strong></p>
+
+      <div class="actions">
+        <a class="button" href="/orders">View Orders</a>
+        <a class="button secondary" href="/products">Continue Shopping</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

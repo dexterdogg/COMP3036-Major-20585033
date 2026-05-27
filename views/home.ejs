@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <%- include('navbar') %>
-    <div id="mainContent">
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <%- include('navbar') %>
+
+  <main class="page">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">COMP3036 Major Project · Iteration 1</p>
         <h1><%= title %></h1>
-        <p>Welcome to <%= title %></p>
-    </div>
-  </body>
+        <p>
+          Browse products, filter by category, add items to your cart,
+          and complete a secure mock checkout.
+        </p>
+
+        <div class="actions">
+          <a class="button" href="/products">Browse Products</a>
+          <% if (!isAuthed) { %>
+            <a class="button secondary" href="/register">Create Account</a>
+          <% } %>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-grid">
+      <article class="card">
+        <h2>Product Catalogue</h2>
+        <p>Products are loaded from PostgreSQL with categories, stock, images, and prices.</p>
+      </article>
+
+      <article class="card">
+        <h2>Shopping Cart</h2>
+        <p>Authenticated users can add, update, and remove cart items before checkout.</p>
+      </article>
+
+      <article class="card">
+        <h2>Mock Payment</h2>
+        <p>The checkout flow records purchases without storing real card details.</p>
+      </article>
+    </section>
+  </main>
+</body>
 </html>

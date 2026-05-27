@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <%- include('navbar') %>
+
+  <main class="page">
+    <header class="page-header">
+      <h1>Your Cart</h1>
+      <p>Review items before completing checkout.</p>
+    </header>
+
+    <% if (error) { %>
+      <p class="alert"><%= error %></p>
+    <% } %>
+
+    <% if (cart.items.length === 0) { %>
+      <section class="card">
+        <p>Your cart is empty.</p>
+        <a class="button" href="/products">Browse Products</a>
+      </section>
+    <% } else { %>
+      <section class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% cart.items.forEach((item) => { %>
+              <tr>
+                <td><%= item.name %></td>
+                <td><%= formatMoney(item.price_cents) %></td>
+                <td>
+                  <form method="POST" action="/cart/items/<%= item.product_id %>/update" class="inline-form">
+                    <input type="number" name="quantity" min="1" max="<%= item.stock_quantity %>" value="<%= item.quantity %>">
+                    <button type="submit">Update</button>
+                  </form>
+                </td>
+                <td><%= formatMoney(item.line_total_cents) %></td>
+                <td>
+                  <form method="POST" action="/cart/items/<%= item.product_id %>/delete">
+                    <button type="submit" class="danger">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+        <div class="summary">
+          <strong>Cart Total: <%= formatMoney(cart.totalCents) %></strong>
+          <a class="button" href="/checkout">Checkout</a>
+        </div>
+      </section>
+    <% } %>
+  </main>
+</body>
+</html>
