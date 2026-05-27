@@ -1,43 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title><%= title || 'My Account' %></title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-  <%- include('navbar') %>
+<%- include('navbar') %>
 
-  <main class="page">
-    <header class="page-header">
+<%
+  const firstName = me?.firstName || '';
+  const lastName = me?.lastName || '';
+  const displayName = `${firstName} ${lastName}`.trim() || 'User';
+  const recentPurchases = Array.isArray(purchases) ? purchases.slice(0, 5) : [];
+%>
+
+<main class="page profile-page">
+  <section class="profile-header">
+    <div>
+      <p class="eyebrow">Account</p>
       <h1>My Account</h1>
-      <p>Your account details and recent purchase history.</p>
-    </header>
+      <p>Manage your Campus Store account and review your latest purchases.</p>
+    </div>
 
-    <section class="card">
-      <h2><%= (me?.firstName || '') + (me?.lastName ? ' ' + me.lastName : '') || 'User' %></h2>
-      <p>Email: <%= me?.email || '—' %></p>
-      <p>Role: <%= me?.role || '—' %></p>
-    </section>
+    <div class="profile-actions">
+      <a class="button secondary" href="/products">Browse Products</a>
 
-    <section class="card">
-      <h2>Recent Purchases</h2>
-
-      <% if (!purchases || purchases.length === 0) { %>
-        <p>No purchases yet.</p>
-      <% } else { %>
-        <ul>
-          <% purchases.slice(0, 5).forEach((purchase) => { %>
-            <li>
-              <a href="/orders/<%= purchase.id %>">
-                Order #<%= purchase.id %>
-              </a>
-              — $<%= (Number(purchase.total_cents) / 100).toFixed(2) %>
-            </li>
-          <% }) %>
-        </ul>
+      <% if (me?.role === 'Admin') { %>
+        <a class="button" href="/admin/products">Admin Dashboard</a>
       <% } %>
-    </section>
-  </main>
-</body>
-</html>
+    </div>
+  </section>
+
+  <section class="profile-grid">
+    <article class="card profile-card compact-card">
+      <h2>Account Details</h2>
+
+      <dl class="profile-details">
+        <div>
+          <dt>Name</dt>
+          <dd><%= displayName %></dd>
+        </div>
+
+        <div>
+          <dt>Email</dt>
+          <dd><%= me?.email || '—' %></dd>
+        </div>
+
+        <div>
+          <dt>Role</dt>
+          <dd>
+            <span class="status-pill"><%= me?.role || '—' %></span>
+          </dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="card profile-card compact-card">
+      <div class="section-title-row">
+        <h2>Recent Purchases</h2>
+        <a href="/orders">View all</a>
+      </div>
+
+      <% if (recentPurchases.length === 0) { %>
+        <div class="empty-state compact-empty">
+          <p>No purchases yet.</p>
+          <a class="button" href="/products">Start Shopping</a>
+        </div>
+      <% } else { %>
+        <div class="table-wrap">
+          <table class="compact-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% recentPurchases.forEach((purchase) => { %>
+                <tr>
+                  <td>
+                    <a href="/orders/<%= purchase.id %>">
+                      #<%= purchase.id %>
+                    </a>
+                  </td>
+
+                  <td>
+                    <%= purchase.created_at
+                      ? new Date(purchase.created_at).toLocaleDateString()
+                      : '—'
+                    %>
+                  </td>
+
+                  <td>
+                    <span class="status-pill">
+                      <%= purchase.status || 'paid' %>
+                    </span>
+                  </td>
+
+                  <td class="text-right">
+                    $<%= (Number(purchase.total_cents || 0) / 100).toFixed(2) %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </article>
+  </section>
+</main>

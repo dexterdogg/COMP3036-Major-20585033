@@ -15,11 +15,13 @@
       <% if (typeof error !== 'undefined' && error) { %>
         <div class="alert" role="alert">
           <%= error %>
+
         </div>
       <% } %>
 
       <form class="auth-form" action="/login" method="post" novalidate>
         <label for="email">
+          
           Email address
           <input
             id="email"

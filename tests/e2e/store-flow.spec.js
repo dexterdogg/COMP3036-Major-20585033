@@ -74,7 +74,9 @@ test.describe('Iteration 1 B2C Store E2E Flow', () => {
         await page.getByRole('button', { name: /pay|mock payment/i }).click();
       });
 
-    await expect(page.getByText(/order confirmed/i)).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: /order confirmed/i }),
+      ).toBeVisible();
 
     await page.getByRole('link', { name: /view orders/i }).click();
 

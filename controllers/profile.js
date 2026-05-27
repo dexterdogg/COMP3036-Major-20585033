@@ -18,7 +18,7 @@ export async function showProfile(req, res) {
       email: me.email,
       role: me.role,
       firstName: me.first_name,
-      lastName: me.last_name
+      lastName: me.last_name,
     };
 
     const purchases = await getPurchasesByUserId(viewUser.id);
@@ -27,8 +27,7 @@ export async function showProfile(req, res) {
       title: 'My Account',
       me: viewUser,
       isAuthed: true,
-      registeredEvents,
-      purchases
+      purchases,
     });
   } catch (err) {
     console.error('showProfile error:', err);
@@ -39,8 +38,8 @@ export async function showProfile(req, res) {
       error: {
         status: 500,
         message: 'Failed to load profile.',
-        stack: ''
-      }
+        stack: '',
+      },
     });
   }
 }
