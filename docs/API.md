@@ -31,17 +31,6 @@ Authentication is created when a user logs in through the web login form.
 | Authenticated user | Any logged-in user |
 | Admin | Logged-in user with the `Admin` role |
 
-### Important note about API authentication
-
-The current implementation uses the same authentication middleware as the web routes. This means unauthenticated API requests may redirect to `/login` instead of returning a JSON `401` response.
-
-For a production API, the recommended improvement would be to add API-specific middleware that returns JSON error responses such as:
-
-```json
-{
-  "error": "Authentication required."
-}
-```
 
 ---
 

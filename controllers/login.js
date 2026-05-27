@@ -19,8 +19,12 @@ export async function postLogin(req, res) {
     // Check password 
     const ok = user && await bcrypt.compare(password, user.password_hash);
     if (!ok) {
-        // On auth failure, re-render login with a generic error
-        return res.status(401).render("login", { title: "Login", error: "Invalid credentials" });
+        // On auth failure, re-render login with an error
+        return res.status(401).render('login', {
+            title: 'Login',
+            error: 'Invalid credentials',
+            values: { email },
+          });
     }
 
     // Create JWT and set as HttpOnly cookie

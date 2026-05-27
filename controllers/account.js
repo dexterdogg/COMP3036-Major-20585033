@@ -22,22 +22,34 @@ export async function postRegister(req, res) {
             lastName = "",
             email = "",
             password = "",
-          } = req.body || {};
-          
-          const role = "Student";
+        } = req.body || {};
+
+        const role = "Student";
 
         // Validate input
         if (!email || !password) {
-            return res.status(400).render("register", { title: "Create Account", error: "Email and password are required." });
+            return res.status(400).render('register', {
+                title: 'Create Account',
+                error: 'Email and password are required.',
+                values: req.body || {},
+            });
         }
         if (password.length < 8) {
-            return res.status(400).render("register", { title: "Create Account", error: "Password must be at least 8 characters." });
+            return res.status(400).render("register", { 
+                title: "Create Account", 
+                error: "Password must be at least 8 characters.",
+                values: req.body || {},
+            });
         }
 
         // does user already exist?
         const already = await findUserByEmail(email);
         if (already) {
-            return res.status(409).render("register", { title: "Create Account", error: "An account with that email already exists." });
+            return res.status(409).render("register", { 
+                title: "Create Account", 
+                error: "An account with that email already exists.",
+                values: req.body || {},
+            });
         }
 
         // hash password
@@ -62,10 +74,13 @@ export async function postRegister(req, res) {
 
         return res.redirect("/profile");
 
-// Catch any errors
+        // Catch any errors
     } catch (err) {
         console.error("postRegister error:", err);
         // Likely duplicate email if UNIQUE index fires
-        return res.status(500).render("register", { title: "Create Account", error: "Could not create account. Please try again.", values: req.body || {} });
+        return res.status(500).render("register", { 
+            title: "Create Account", 
+            error: "Could not create account. Please try again.", 
+            values: req.body || {} });
     }
 }

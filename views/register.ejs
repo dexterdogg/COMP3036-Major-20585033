@@ -1,52 +1,89 @@
-<!doctype html>
-<html lang="en">
+<%- include('navbar') %>
 
-<head>
-    <meta charset="utf-8" />
-    <title>
-        <%= title || "Create Account" %>
-    </title>
-    <link rel="stylesheet" href="/stylesheets/register.css" />
-</head>
+<main class="page auth-page">
+  <section class="auth-shell">
+    
 
-<body>
-    <%- include('navbar') %>
+    <section class="auth-panel auth-form-card" aria-labelledby="register-heading">
+      <p class="eyebrow">New Account</p>
 
-        <main class="auth-wrap">
-            <section class="auth-card">
-                <h1>Create Account</h1>
-                <p class="sub">Use your university email address.</p>
+      <h2 id="register-heading">Register</h2>
 
-                <% if (typeof error !=="undefined" && error) { %>
-                    <p class="error">
-                        <%= error %>
-                    </p>
-                    <% } %>
+      <p class="auth-muted">
+        Use your university email address. All public registrations are created as student
+        accounts.
+      </p>
 
-                        <form method="post" action="/register" class="form">
-                            <label>First name
-                                <input type="text" name="firstName" autocomplete="given-name" />
-                            </label>
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert" role="alert">
+          <%= error %>
+        </div>
+      <% } %>
 
-                            <label>Last name
-                                <input type="text" name="lastName" autocomplete="family-name" />
-                            </label>
+      <form class="auth-form" action="/register" method="post" novalidate>
+        <div class="auth-two-column">
+          <label for="firstName">
+            First name
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autocomplete="given-name"
+              placeholder="Alex"
+              value="<%= typeof values !== 'undefined' && values.firstName ? values.firstName : '' %>"
+              required
+            >
+          </label>
 
-                            <label>Email
-                                <input type="email" name="email" required autocomplete="email" />
-                            </label>
+          <label for="lastName">
+            Last name
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autocomplete="family-name"
+              placeholder="Smith"
+              value="<%= typeof values !== 'undefined' && values.lastName ? values.lastName : '' %>"
+              required
+            >
+          </label>
+        </div>
 
-                            <label>Password
-                                <input type="password" name="password" required minlength="8"
-                                    autocomplete="new-password" />
-                            </label>
-                            <div class="actions">
-                                <button type="submit" class="btn">Create account</button>
-                                <a class="btn ghost" href="/login">Back to login</a>
-                            </div>
-                        </form>
-            </section>
-        </main>
-</body>
+        <label for="email">
+          Email address
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="student1@example.edu"
+            value="<%= typeof values !== 'undefined' && values.email ? values.email : '' %>"
+            required
+          >
+        </label>
 
-</html>
+        <label for="password">
+          Password
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Minimum 8 characters"
+            minlength="8"
+            required
+          >
+        </label>
+
+        <button class="auth-submit" type="submit">
+          Create account
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <span>Already have an account?</span>
+        <a href="/login">Back to login</a>
+      </div>
+    </section>
+  </section>
+</main>

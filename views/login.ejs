@@ -1,40 +1,58 @@
-<!doctype html>
-<html>
-<meta name="page-id" content="login">
+<%- include('navbar') %>
 
-<head>
-  <title>
-    <%= title %>
-  </title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <link rel='stylesheet' href='/stylesheets/login.css' />
-</head>
+<main class="page auth-page">
+  <section class="auth-shell">
+    
+    <section class="auth-panel auth-form-card" aria-labelledby="login-heading">
+      <p class="eyebrow">Account Access</p>
 
-<body>
-  <%- include('navbar') %>
+      <h2 id="login-heading">Log in</h2>
 
-    <h1>Welcome to CampusWell </h1>
-    <h3>Login</h3>
-    <div class="loginBox">
+      <p class="auth-muted">
+        Use your seeded student or administrator account to access the store.
+      </p>
 
-      <% if (typeof error !=='undefined' && error) { %>
-        <p class="error">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert" role="alert">
           <%= error %>
-        </p>
-        <% } %>
+        </div>
+      <% } %>
 
+      <form class="auth-form" action="/login" method="post" novalidate>
+        <label for="email">
+          Email address
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="student1@example.edu"
+            value="<%= typeof values !== 'undefined' && values.email ? values.email : '' %>"
+            required
+          >
+        </label>
 
-          <form method="post" action="/login">
-            <label>Email</label>
-            <input name="email" type="email" required />
-            <label>Password</label>
-            <input name="password" type="password" required />
-            <p class="small">
-              New here? <a href="/register">Create an account</a>
-            </p>
-            <button type="submit">Log in</button>
-          </form>
-    </div>
-</body>
+        <label for="password">
+          Password
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter your password"
+            required
+          >
+        </label>
 
-</html>
+        <button class="auth-submit" type="submit">
+          Log in
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <span>New to the store?</span>
+        <a href="/register">Create an account</a>
+      </div>
+    </section>
+  </section>
+</main>
