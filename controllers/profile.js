@@ -1,5 +1,4 @@
 import { findUserById } from '../services/users.js';
-import { getUserEventsByID } from '../models/eventModels.js';
 import { getPurchasesByUserId } from '../models/purchaseModels.js';
 
 export async function showProfile(req, res) {
@@ -22,7 +21,6 @@ export async function showProfile(req, res) {
       lastName: me.last_name
     };
 
-    const registeredEvents = await getUserEventsByID(viewUser.id);
     const purchases = await getPurchasesByUserId(viewUser.id);
 
     return res.render('profile', {

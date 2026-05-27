@@ -43,10 +43,6 @@ app.use('/orders', ordersRouter);
 app.use('/admin/products', adminProductsRouter);
 app.use('/api', apiStoreRouter);
 
-app.use('/search', searchRouter);
-app.use('/moodTracker', moodTrackerRouter);
-app.use('/taskBoard', taskBoardRouter);
-
 app.get('/test', (req, res) => {
   res.send('Test');
 });
