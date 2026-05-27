@@ -91,6 +91,8 @@ test.describe('Iteration 1 B2C Store E2E Flow', () => {
       page.getByRole('heading', { name: /admin dashboard|admin products/i }),
     ).toBeVisible();
 
-    await expect(page.getByText(/purchase records/i)).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /purchase records/i }),
+    ).toBeVisible();
   });
 });
