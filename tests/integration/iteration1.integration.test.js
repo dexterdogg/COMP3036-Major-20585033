@@ -50,6 +50,27 @@ suite('Iteration 1 B2C Store Integration Tests', () => {
       assert.match(res.text, /invalid/i);
     });
 
+    test('registration cannot create admin users', async () => {
+      const res = await request(app)
+        .post('/register')
+        .type('form')
+        .send({
+          firstName: 'Malicious',
+          lastName: 'User',
+          email: 'malicious@example.edu',
+          password: 'Password123',
+          role: 'Admin',
+        });
+    
+      assert.equal(res.status, 302);
+    
+      const rows = await sql`
+        SELECT role FROM users WHERE email = 'malicious@example.edu' LIMIT 1;
+      `;
+    
+      assert.equal(rows[0].role, 'Student');
+    });
+
     test('POST /login accepts valid student credentials and sets auth cookie', async () => {
       const res = await request(app)
         .post('/login')

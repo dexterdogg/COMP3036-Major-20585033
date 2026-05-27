@@ -17,8 +17,14 @@ export function showRegister(req, res) {
 // POST 
 export async function postRegister(req, res) {
     try {
-        const { firstName = "", lastName = "", email = "", password = "", role = "Student" } = req.body || {};
-
+        const {
+            firstName = "",
+            lastName = "",
+            email = "",
+            password = "",
+          } = req.body || {};
+          
+          const role = "Student";
 
         // Validate input
         if (!email || !password) {
