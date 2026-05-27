@@ -3,9 +3,6 @@ import debug from 'debug';
 import * as server from './config/server.js';
 
 import { homeRouter } from './routes/home.js';
-import { searchRouter } from './routes/search.js';
-import { moodTrackerRouter } from './routes/moodTracker.js';
-import { taskBoardRouter } from './routes/taskBoard.js';
 import { loginRouter } from './routes/login.js';
 import { profileRouter } from './routes/profile.js';
 import { accountRouter } from './routes/account.js';
