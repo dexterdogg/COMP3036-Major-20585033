@@ -29,7 +29,7 @@ This project extends a previous COMP3028/Express CampusWell-style application. T
 ## Setup
 npm install
 npm run migrate
-npm run dev
+npm start
 
 ## Testing
 npm test
