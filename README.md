@@ -27,13 +27,28 @@ This project extends a previous COMP3028/Express CampusWell-style application. T
 - Additional E2E coverage
 
 ## Setup
+- Install dependencies:
+
 npm install
-npm run migrate
+
+- reset and see the PostgreSQL database:
+
+npm run db:reset
+
+- Start application:
+
 npm start
 
+- open app at:
+
+http://127.0.0.1:3000
+
 ## Testing
+
 npm test
 npm run test:e2e
+
+npm run test:all
 
 ## Demo Accounts
 
@@ -47,3 +62,8 @@ Admin:
 
 ## API Documentation
 See docs/API.md
+
+
+## Generative AI Acknowledgement
+
+Generative AI was used as a support tool to review code structure, identify potential bugs, improve documentation, and assist with test planning. All code was reviewed, tested, Understood and adapted before submission.
