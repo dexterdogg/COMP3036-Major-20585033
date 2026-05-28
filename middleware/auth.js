@@ -76,8 +76,7 @@ export function maybeAuthed(req, res, next) {
 /**
  * Admin-only guard.
  * Put ensureAuthed before this on protected admin routes.
- */
-export function ensureAdmin(req, res, next) {
+ */export function ensureAdmin(req, res, next) {
   if (!req.user) {
     return res.redirect("/login");
   }
@@ -86,6 +85,11 @@ export function ensureAdmin(req, res, next) {
     return res.status(403).render("error", {
       title: "Forbidden",
       message: "You do not have permission to access this page.",
+      error: {
+        status: 403,
+        message: "Forbidden",
+        stack: "",
+      },
     });
   }
 
