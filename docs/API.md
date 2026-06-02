@@ -1,8 +1,8 @@
-# Campus Store API Documentation
+# University Store API Documentation
 
 ## Overview
 
-Campus Store exposes customer-facing and administrator API endpoints for the B2C store application.
+University Store exposes customer-facing and administrator API endpoints for the B2C store application.
 
 The API supports:
 
