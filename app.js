@@ -47,14 +47,16 @@ app.get('/test', (req, res) => {
   res.send('Test');
 });
 
+
 server.errorHandling(app);
 
-export const runningServer =
-  process.env.NODE_ENV === 'test'
-    ? {
-        close: async () => {}
-      }
-    : app.listen(server.port, () => {
-        console.log(`Example app listening on port ${server.port}`);
-        debug('testing');
-      });
+const shouldStartServer = process.env.NODE_ENV !== 'test' && process.env.VERCEL !== '1';
+
+export const runningServer = shouldStartServer
+  ? app.listen(server.port, () => {
+      console.log(`Example app listening on port ${server.port}`);
+      debug('testing');
+    })
+  : { close: async () => {} };
+
+export default app;
