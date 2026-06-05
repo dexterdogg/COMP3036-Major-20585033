@@ -5,13 +5,19 @@ import path from 'path';
 import postgres from 'postgres';
 
 // Database connection configuration
-const sql = postgres({
-  host: process.env.PGHOST || 'db',
-  port: Number(process.env.PGPORT || 5432),
-  database: process.env.PGDATABASE || 'postgres',
-  username: process.env.PGUSER || 'postgres',
-  password: process.env.PGPASSWORD || 'postgres'
-});
+const connectionString = process.env.DATABASE_URL;
+
+const sql = connectionString
+  ? postgres(connectionString, {
+      ssl: 'require',
+    })
+  : postgres({
+      host: process.env.PGHOST || 'db',
+      port: Number(process.env.PGPORT || 5432),
+      database: process.env.PGDATABASE || 'postgres',
+      username: process.env.PGUSER || 'postgres',
+      password: process.env.PGPASSWORD || 'postgres',
+    });
 
 // Get the directory name for the migrations folder
 const migrationsDir = path.join(import.meta.dirname, '../migrations');
