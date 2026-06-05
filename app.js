@@ -55,6 +55,6 @@ export const runningServer =
         close: async () => {}
       }
     : app.listen(server.port, () => {
-        console.log(`Example app listening on port http://127.0.0.1:${server.port}`);
+        console.log(`Example app listening on port ${server.port}`);
         debug('testing');
       });

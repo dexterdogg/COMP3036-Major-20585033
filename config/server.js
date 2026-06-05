@@ -5,7 +5,7 @@ import express from 'express';
 import path from 'path';
 
 // Set the server port
-export const port = 3000;
+export const port = Number(process.env.PORT || 3000);
 
 
 /**
